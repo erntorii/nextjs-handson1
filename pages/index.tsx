@@ -1,5 +1,6 @@
 import { Client } from '@notionhq/client'
 import { GetStaticProps, NextPage } from 'next';
+import styles from '../styles/Home.module.css';
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN
@@ -137,8 +138,17 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
 };
 
 const Home: NextPage<StaticProps> = ({ post }) => {
-  console.log(post);
-  return <div></div>;
+  if (!post) {
+    return null;
+  }
+
+  return (
+    <div className={styles.wrapper}>
+      <div className={styles.post}>
+        <h1 className={styles.title}>{post.title}</h1>
+      </div>
+    </div>
+  );
 };
 
 export default Home;
