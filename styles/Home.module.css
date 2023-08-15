@@ -25,3 +25,33 @@
   margin-bottom: 4px;
   font-size: 14px;
 }
+
+.heading2 {
+  font-weight: 500;
+  font-size: 20px;
+  margin: 8px 0;
+}
+
+.heading3 {
+  font-weight: 500;
+  font-size: 18px;
+  margin: 8px 0;
+}
+
+.paragraph {
+  line-height: 24px;
+}
+
+.code {
+  line-height: 24px;
+  margin: 16px 0 !important;
+}
+
+.quote {
+  line-height: 24px;
+  font-style: italic;
+  color: #d1d5db;
+  margin: 0;
+  padding: 0 16px;
+  border-left: 2px solid #d1d5db;
+}

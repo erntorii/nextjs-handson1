@@ -147,6 +147,7 @@ const Home: NextPage<StaticProps> = ({ post }) => {
     <div className={styles.wrapper}>
       <div className={styles.post}>
         <h1 className={styles.title}>{post.title}</h1>
+
         <div className={styles.timestampWrapper}>
           <div>
             <div className={styles.timestamp}>
@@ -166,6 +167,48 @@ const Home: NextPage<StaticProps> = ({ post }) => {
               }
             </div>
           </div>
+        </div>
+
+        <div>
+          {post.contents.map((content, index) => {
+            const key = `${post.id}_${index}`;
+            switch(content.type) {
+              case 'heading_2':
+                return (
+                  <h2 key={key} className={styles.heading2}>
+                    {content.text}
+                  </h2>
+                );
+
+              case 'heading_3':
+                return (
+                  <h3 key={key} className={styles.heading3}>
+                    {content.text}
+                  </h3>
+                );
+
+              case 'paragraph':
+                return (
+                  <p key={key} className={styles.paragraph}>
+                    {content.text}
+                  </p>
+                );
+
+              case 'code':
+                return (
+                  <pre key={key} className={`styles.code lang-${content.language}`}>
+                    {content.text}
+                  </pre>
+                );
+
+              case 'quote':
+                return (
+                  <blockquote key={key} className={styles.quote}>
+                    {content.text}
+                  </blockquote>
+                );
+            }
+          })}
         </div>
       </div>
     </div>
