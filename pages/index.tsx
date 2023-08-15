@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import { useEffect } from 'react';
 import prism from 'prismjs';
 import { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
+import Link from 'next/link';
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN
@@ -192,7 +193,11 @@ const Home: NextPage<StaticProps> = ({ posts }) => {
     <div className={styles.wrapper}>
       {posts.map((post) => (
         <div className={styles.post} key={post.id}>
-          <h1 className={styles.title}>{post.title}</h1>
+          <h1 className={styles.title}>
+            <Link href={`/post/${encodeURIComponent(post.slug ?? '')}`} >
+              {post.title}
+            </Link>
+          </h1>
 
           <div className={styles.timestampWrapper}>
             <div>
