@@ -14,3 +14,14 @@
   font-weight: 700;
   margin: 16px 0;
 }
+
+.timestampWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.timestamp {
+  margin-bottom: 4px;
+  font-size: 14px;
+}

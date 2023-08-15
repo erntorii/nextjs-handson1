@@ -1,6 +1,7 @@
 import { Client } from '@notionhq/client'
 import { GetStaticProps, NextPage } from 'next';
 import styles from '../styles/Home.module.css';
+import dayjs from 'dayjs';
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN
@@ -146,6 +147,26 @@ const Home: NextPage<StaticProps> = ({ post }) => {
     <div className={styles.wrapper}>
       <div className={styles.post}>
         <h1 className={styles.title}>{post.title}</h1>
+        <div className={styles.timestampWrapper}>
+          <div>
+            <div className={styles.timestamp}>
+              作成日時:{' '}
+              {
+                dayjs(post.createdTs).format(
+                  'YYYY-MM-DD HH:mm:ss'
+                )
+              }
+            </div>
+            <div className={styles.timestamp}>
+              更新日時:{' '}
+              {
+                dayjs(post.lastEditedTs).format(
+                  'YYYY-MM-DD HH:mm:ss'
+                )
+              }
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
