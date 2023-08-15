@@ -180,7 +180,7 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
     post.contents = contentsList[index];
   });
 
-  return { props: { posts } }
+  return { props: { posts }, revalidate: 60 };
 }
 
 const Home: NextPage<StaticProps> = ({ posts }) => {

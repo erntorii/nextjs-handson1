@@ -1,4 +1,4 @@
-import styles from '../styles/Home.module.css';
+import styles from './index.module.css';
 import dayjs from 'dayjs';
 import { FunctionComponent } from 'react';
 import Link from 'next/link';
