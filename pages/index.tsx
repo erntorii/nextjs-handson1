@@ -37,7 +37,7 @@ type StaticProps = {
   posts: Post[];
 };
 
-export const getStaticProps: GetStaticProps<StaticProps> = async () => {
+export const getPosts = async () => {
   const database = await notion.databases.query({
     database_id: process.env.NOTION_DATABASE_ID || '',
     filter: {
@@ -54,14 +54,6 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
   });
 
   const posts: Post[] = [];
-
-  const blockResponses = await Promise.all(
-    database.results.map((page) => {
-      return notion.blocks.children.list({
-        block_id: page.id
-      });
-    })
-  );
 
   database.results.forEach((page, index) => {
     if (!page || page.object !== 'page') {
@@ -90,57 +82,17 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
       slug = page.properties['Slug'].rich_text[0]?.plain_text ?? null;
     }
 
-    const blocks = blockResponses[index];
-
-    const contents: Content[] = [];
-
-    blocks.results.forEach((block) => {
-      if (!('type' in block)) {
-        return;
-      }
-
-      switch (block.type) {
-        case 'paragraph':
-          contents.push({
-            type: 'paragraph',
-            text: block.paragraph.rich_text[0]?.plain_text ?? null
-          });
-          break;
-
-        case 'heading_2':
-          contents.push({
-            type: 'heading_2',
-            text: block.heading_2.rich_text[0]?.plain_text ?? null
-          });
-          break;
-
-        case 'quote':
-          contents.push({
-            type: 'quote',
-            text: block.quote.rich_text[0]?.plain_text ?? null
-          });
-          break;
-
-        case 'code':
-          contents.push({
-            type: 'code',
-            text: block.code.rich_text[0]?.plain_text ?? null,
-            language: block.code.language
-          });
-      }
-    });
-
     posts.push({
       id: page.id,
       title,
       slug,
       createdTs: page.created_time,
       lastEditedTs: page.last_edited_time,
-      contents
+      contents: []
     });
   });
 
-  return { props: { posts } };
+  return posts;
 };
 
 const Home: NextPage<StaticProps> = ({ posts }) => {
